@@ -1,0 +1,274 @@
+<ion-header class="ion-no-border nova-glass">
+  <ion-toolbar color="transparent">
+    <div class="header-content">
+      <div class="user-info">
+        <span class="greeting">DASHBOARD/ACCESS:</span>
+        <span class="username">{{ greetingName | uppercase }}</span>
+      </div>
+      <div class="header-actions">
+        <ion-button (click)="openNotificationsModal()" class="nova-btn-icon">
+          <ion-icon name="pulse-outline" class="neon-primary"></ion-icon>
+        </ion-button>
+        <div class="avatar-container nova-glow" (click)="openProfileModal()">
+          <span class="avatar-text">{{ profileInitials }}</span>
+        </div>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="home-content ion-padding-bottom">
+  <!-- Resumen de gastos del mes actual -->
+  <section class="monthly-summary nova-glass ion-margin-horizontal ion-margin-top">
+    <div class="summary-header">
+      <h3 class="nova-gradient-text">SYSTEM_ANALYTICS</h3>
+      <div class="status-orb"></div>
+    </div>
+    
+    <div *ngIf="!loadingStats" class="summary-stats">
+      <div class="stat-box">
+        <span class="stat-label">TOTAL_OUTFLOW</span>
+        <span class="stat-value neon-error">${{ currentMonthStats.totalSpent | number:'1.0-0' }}</span>
+      </div>
+      
+      <div class="stat-box">
+        <span class="stat-label">LOG_COUNT</span>
+        <span class="stat-value neon-primary">{{ currentMonthStats.transactionCount }}</span>
+      </div>
+    </div>
+      <div class="stat-item">
+        <span class="stat-label">📈 Promedio</span>
+        <span class="stat-value">${{ currentMonthStats.averagePerTransaction | number:'1.0-0' }}</span>
+      </div>
+
+    <div *ngIf="loadingStats" class="summary-stats">
+      <div class="stat-item">
+        <ion-skeleton-text animated style="width: 100%; height: 50px;"></ion-skeleton-text>
+      </div>
+      <div class="stat-item">
+        <ion-skeleton-text animated style="width: 100%; height: 50px;"></ion-skeleton-text>
+      </div>
+      <div class="stat-item">
+        <ion-skeleton-text animated style="width: 100%; height: 50px;"></ion-skeleton-text>
+      </div>
+    </div>
+
+    <div *ngIf="!loadingStats && currentMonthStats.transactionCount === 0" class="summary-empty">
+      <p>Aún no tienes transacciones este mes. ¡Comienza a gastar!</p>
+    </div>
+  </section>
+
+  <section class="notifications-summary card-glass ion-margin-horizontal">
+    <div class="summary-header">
+      <h3>Notificaciones</h3>
+      <ion-button fill="clear" size="small" (click)="openNotificationsModal()">
+        Ver
+      </ion-button>
+    </div>
+    <div class="summary-body" *ngIf="latestNotification; else noNotifications">
+      <p class="summary-title">{{ latestNotification.title }}</p>
+      <p class="summary-text">{{ latestNotification.body }}</p>
+      <span class="summary-time">{{ formatNotificationTimestamp(latestNotification.createdAt) }}</span>
+    </div>
+    <ng-template #noNotifications>
+      <p class="summary-empty">Aún no tienes notificaciones recientes.</p>
+    </ng-template>
+  </section>
+
+  <section class="cards-section">
+    <div class="section-header">
+      <h2 class="section-title">ACTIVE_VAULTS</h2>
+      <div class="card-actions" *ngIf="activeCard">
+        <ion-button fill="clear" size="small" (click)="openCardEditor()">
+          <ion-icon slot="start" name="create-outline"></ion-icon>
+          Editar
+        </ion-button>
+        <ion-button fill="clear" size="small" color="danger" (click)="confirmDeleteActiveCard()">
+          <ion-icon slot="start" name="trash-outline"></ion-icon>
+          Borrar
+        </ion-button>
+      </div>
+    </div>
+    <div class="cards-scroll" *ngIf="!loadingCards && cards.length > 0">
+      <button
+        type="button"
+        class="card-select"
+        *ngFor="let card of cards; let i = index"
+        [style.--card-index]="i"
+        [class.active]="card.id === activeCardId"
+        (click)="onCardSelected(card.id)">
+        <app-card [card]="card"></app-card>
+      </button>
+    </div>
+    <div class="empty-block card-glass" *ngIf="!loadingCards && cards.length === 0">
+      <ion-icon name="card-outline"></ion-icon>
+      <p>No tienes tarjetas registradas.</p>
+      <ion-button size="small" (click)="onAction('add')">Agregar tarjeta</ion-button>
+    </div>
+    <app-skeleton-loading *ngIf="loadingCards" [count]="1"></app-skeleton-loading>
+  </section>
+
+  <app-quick-actions (action)="onAction($event)"></app-quick-actions>
+
+  <section id="transaction-section" class="transactions-section ion-padding-horizontal">
+    <div class="movements-header">
+      <h3 class="section-title">DATA_STREAMS</h3>
+      <ion-button fill="clear" size="small" (click)="toggleMovementView()">
+        {{ showAllMovements ? 'Ver resumen' : 'Ver todos' }}
+      </ion-button>
+    </div>
+
+    <div *ngIf="showAllMovements" class="movements-all-view">
+      <app-calendar (dateSelected)="onDateSelected($event)"></app-calendar>
+
+      <div class="date-filter-bar" *ngIf="selectedDateFilter">
+        <span>Filtrando: {{ selectedDateFilter | date:'fullDate':'':'es-CO' }}</span>
+        <ion-button fill="clear" size="small" (click)="clearDateFilter()">Limpiar</ion-button>
+      </div>
+
+      <ng-container *ngIf="groupedTransactions.length > 0; else noMovementsByDate">
+        <div class="date-group" *ngFor="let group of groupedTransactions">
+          <div class="date-group-header">{{ group.label }}</div>
+          <app-transaction-item
+            *ngFor="let tx of group.transactions"
+            [transaction]="tx"
+            (longPress)="onTransactionLongPress($event)">
+          </app-transaction-item>
+        </div>
+      </ng-container>
+
+      <ng-template #noMovementsByDate>
+        <div class="empty-block card-glass compact-empty">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <p>No hay movimientos para la fecha seleccionada.</p>
+        </div>
+      </ng-template>
+    </div>
+
+    <app-transaction-list
+      *ngIf="!showAllMovements"
+      [transactions]="transactions"
+      [loading]="loadingTransactions"
+      title="Últimos movimientos"
+      (transactionLongPress)="onTransactionLongPress($event)">
+    </app-transaction-list>
+  </section>
+
+  <ion-modal [isOpen]="showCardEditorModal" (didDismiss)="closeCardEditor()">
+    <ng-template>
+      <ion-header class="ion-no-border">
+        <ion-toolbar>
+          <ion-title>Editar tarjeta</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeCardEditor()">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding card-editor-modal-content">
+        <div class="card-editor-form card-glass">
+          <ion-item lines="none">
+            <ion-label position="stacked">Titular</ion-label>
+            <ion-input
+              [(ngModel)]="editCardHolder"
+              placeholder="Nombre del titular"
+              maxlength="40">
+            </ion-input>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label position="stacked">Fecha de expiración</ion-label>
+            <ion-input
+              [(ngModel)]="editCardExpiryDate"
+              (ngModelChange)="onEditExpiryChanged($event)"
+              placeholder="MM/YY"
+              maxlength="5">
+            </ion-input>
+          </ion-item>
+
+          <div class="color-row">
+            <label for="edit-card-color">Color de la tarjeta</label>
+            <input id="edit-card-color" type="color" [(ngModel)]="editCardColor" />
+          </div>
+        </div>
+
+        <ion-button expand="block" (click)="saveCardEdits()">
+          Guardar cambios
+        </ion-button>
+        <ion-button expand="block" color="danger" fill="outline" (click)="confirmDeleteActiveCard()">
+          Borrar tarjeta
+        </ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal [isOpen]="showProfileModal" (didDismiss)="closeProfileModal()">
+    <ng-template>
+      <ion-header class="ion-no-border">
+        <ion-toolbar>
+          <ion-title>Mi perfil</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeProfileModal()">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding profile-modal-content">
+        <div class="profile-card card-glass">
+          <div class="avatar-large">{{ profileInitials }}</div>
+          <h3>{{ accountDisplayName }}</h3>
+          <p>{{ accountEmail }}</p>
+        </div>
+
+        <div class="profile-options card-glass">
+          <ion-item lines="none">
+            <ion-label>
+              <h4>Biometría para pagos</h4>
+              <p>Solicitar validación de identidad en pagos.</p>
+            </ion-label>
+            <ion-toggle slot="end" [(ngModel)]="profileBiometricEnabled"></ion-toggle>
+          </ion-item>
+        </div>
+
+        <ion-button expand="block" (click)="saveProfileSettings()">
+          Guardar cambios
+        </ion-button>
+        <ion-button expand="block" color="danger" fill="outline" (click)="logout()">
+          Cerrar sesión
+        </ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal [isOpen]="showNotificationsModal" (didDismiss)="closeNotificationsModal()">
+    <ng-template>
+      <ion-header class="ion-no-border">
+        <ion-toolbar>
+          <ion-title>Notificaciones</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeNotificationsModal()">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding notifications-modal-content">
+        <div class="notification-item card-glass" *ngFor="let item of notifications">
+          <div class="notification-head">
+            <strong>{{ item.title }}</strong>
+            <span>{{ formatNotificationTimestamp(item.createdAt) }}</span>
+          </div>
+          <p>{{ item.body }}</p>
+        </div>
+
+        <div class="empty-block card-glass compact-empty" *ngIf="notifications.length === 0">
+          <ion-icon name="notifications-off-outline"></ion-icon>
+          <p>No hay notificaciones para mostrar.</p>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>
