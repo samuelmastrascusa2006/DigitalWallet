@@ -450,12 +450,19 @@ export class HomePage implements OnInit, OnDestroy {
 
   private async loadDashboardData(): Promise<void> {
     try {
-      const user = await firstValueFrom(
-        this.IdentityCore.currentUser$.pipe(
-          filter((authUser: User | null): authUser is User => !!authUser),
-          take(1)
-        )
+      const timeoutPromise = new Promise<never>((_, reject) => 
+        setTimeout(() => reject(new Error('TIMEOUT: No se pudo conectar con el servidor. Revisa tu conexión o AdBlocker.')), 12000)
       );
+
+      const user = await Promise.race([
+        firstValueFrom(
+          this.IdentityCore.currentUser$.pipe(
+            filter((authUser: User | null): authUser is User => !!authUser),
+            take(1)
+          )
+        ),
+        timeoutPromise
+      ]) as User;
 
       this.authAccount = user;
       this.uid = user.uid;
@@ -466,6 +473,10 @@ export class HomePage implements OnInit, OnDestroy {
       this.subscribeToCurrentMonthStats();
     } catch (error) {
       await this.UIMessenger.showError(this.getErrorMessage(error));
+      // Parar spinners de carga si hay timeout
+      this.loadingCards = false;
+      this.loadingTransactions = false;
+      this.loadingStats = false;
     }
   }
 

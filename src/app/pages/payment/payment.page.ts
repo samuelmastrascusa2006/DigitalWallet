@@ -172,18 +172,27 @@ export class PaymentPage implements OnInit, OnDestroy {
 
     this.processing = true;
     await this.LoadingBridge.show('Procesando pago...');
+    
+    // Create a timeout promise (35 seconds for sensitive transactions)
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('TIMEOUT_PAYMENT')), 35000)
+    );
+
     try {
       console.log(`[Payment] Iniciando pago: $${result.amount} en ${result.merchant}`);
       
-      const paymentResult = await this.VaultEngine.processPayment(this.uid, {
-        cardId: this.selectedCard.id,
-        merchant: result.merchant,
-        amount: result.amount
-      }, !!this.userProfile?.biometricEnabled);
+      const paymentResult = await Promise.race([
+        this.VaultEngine.processPayment(this.uid, {
+          cardId: this.selectedCard.id,
+          merchant: result.merchant,
+          amount: result.amount
+        }, !!this.userProfile?.biometricEnabled),
+        timeoutPromise
+      ]) as any;
 
       // Verificar si el pago fue exitoso
       if (!paymentResult.success) {
-        const errorMsg = paymentResult.error || 'Error al procesar el pago';
+        const errorMsg = paymentResult.error || 'Error al propremium el pago';
         console.error(`[Payment] Error: ${errorMsg}`);
         throw new Error(errorMsg);
       }
@@ -204,9 +213,14 @@ export class PaymentPage implements OnInit, OnDestroy {
       setTimeout(() => {
         void this.router.navigate(['/home']);
       }, 500);
-    } catch (error) {
+    } catch (error: any) {
       console.error('[Payment] Error en confirmPayment:', error);
       
+      if (error.message === 'TIMEOUT_PAYMENT') {
+        await this.UIMessenger.showError('La confirmación tardó demasiado. Por favor, verifica tu saldo en el Inicio; es posible que la transacción ya se haya completado.');
+        return;
+      }
+
       // Diferenciar tipos de errores
       const errorMsg = this.getDetailedErrorMessage(error);
       await this.UIMessenger.showError(errorMsg);

@@ -58,7 +58,15 @@ export class RegisterPage implements OnInit {
     await this.LoadingBridge.show('Creando cuenta...');
     try {
       const value = this.registerForm.getRawValue();
-      const firebaseUser = await this.IdentityCore.register(value.email, value.password);
+      
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('TIMEOUT')), 15000)
+      );
+
+      const firebaseUser = await Promise.race([
+        this.IdentityCore.register(value.email, value.password),
+        timeoutPromise
+      ]) as any;
 
       const userProfile: Omit<UserProfile, 'createdAt'> = {
         uid: firebaseUser.uid,
@@ -71,10 +79,18 @@ export class RegisterPage implements OnInit {
         biometricEnabled: false
       };
 
-      await this.ProfileManager.createUserProfile(userProfile);
+      await Promise.race([
+        this.ProfileManager.createUserProfile(userProfile),
+        timeoutPromise
+      ]);
+      
       await this.router.navigate(['/home']);
-    } catch (error) {
-      await this.UIMessenger.showError(this.getErrorMessage(error));
+    } catch (error: any) {
+      if (error.message === 'TIMEOUT') {
+        await this.UIMessenger.showError('El registro tardó demasiado. Por favor, desactiva tu Ad-Blocker (McAfee/Blur) e inténtalo de nuevo.');
+      } else {
+        await this.UIMessenger.showError(this.getErrorMessage(error));
+      }
     } finally {
       this.submitting = false;
       await this.LoadingBridge.hide();

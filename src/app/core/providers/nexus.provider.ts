@@ -14,7 +14,8 @@ import {
   limit,
   DocumentReference,
   CollectionReference,
-  getDoc
+  getDoc,
+  setDoc
 } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -64,7 +65,9 @@ export class DataConnector {
    */
   async commitFolder(path: string, payload: any): Promise<DocumentReference> {
     const ref = collection(this.store, path);
-    return addDoc(ref, payload);
+    const customDoc = doc(ref); // Generates ID client-side
+    await setDoc(customDoc, payload);
+    return customDoc;
   }
 
   async commitEntry(path: string, payload: any): Promise<void> {

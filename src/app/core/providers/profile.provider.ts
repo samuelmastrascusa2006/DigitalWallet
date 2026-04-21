@@ -72,8 +72,11 @@ export class ProfileManager {
 
         await this.createUserProfile(payload);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('[ProfileManager] Persistence Failure:', err);
+      if (err.message?.toLowerCase().includes('offline')) {
+        throw new Error('No se pudo conectar con la base de datos de NovaVault. Por favor, desactiva cualquier AdBlocker (McAfee, Avira, Blur) para poder iniciar sesión.');
+      }
       throw err;
     }
   }

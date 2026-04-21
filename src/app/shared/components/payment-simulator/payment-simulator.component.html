@@ -1,9 +1,9 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="transparent" class="nova-glass">
-    <ion-title class="nova-gradient-text">PAYMENT AUTHORIZATION</ion-title>
+    <ion-title class="nova-gradient-text">AUTORIZAR PAGO</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="cancel()">
-        <ion-icon name="close-outline" color="primary"></ion-icon>
+      <ion-button (click)="cancel()" class="nova-btn-icon">
+        <ion-icon name="close-outline" class="neon-primary"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -25,26 +25,26 @@
 
     <div class="payment-details card-glass">
       <div class="detail-row">
-        <span class="label">VAULT ASSET</span>
+        <span class="label">ACTIVO DEL VAULT</span>
         <span class="detail-value">•••• •••• •••• {{ cardLastFour }}</span>
       </div>
       <div class="detail-row">
-        <span class="label">VENDOR</span>
+        <span class="label">COMERCIO</span>
         <span class="detail-value">{{ merchantName | uppercase }}</span>
       </div>
       <div class="detail-row">
-        <span class="label">TIMESTAMP</span>
+        <span class="label">FECHA Y HORA</span>
         <span class="detail-value">{{ getCurrentDate() | uppercase }}</span>
       </div>
       <div class="detail-row">
-        <span class="label">STATUS</span>
-        <span class="detail-value status-pending">PENDING BIOMETRIC</span>
+        <span class="label">ESTADO</span>
+        <span class="detail-value status-pending">ESPERANDO BIOMETRÍA</span>
       </div>
     </div>
 
     <button class="confirm-btn nova-glow" (click)="confirm()">
       <ion-icon name="finger-print-outline"></ion-icon>
-      AUTHORIZE TRANSACTION
+      CONFIRMAR TRANSACCIÓN
     </button>
     
     <button class="generate-btn" (click)="generateNewRandomData()">

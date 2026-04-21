@@ -2,78 +2,170 @@
   --background: var(--color-bg-primary);
 }
 
-.preview-wrapper {
+.add-card-container {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
   display: flex;
-  justify-content: center;
-  margin: 24px 0 32px;
-  perspective: 1200px;
-  animation: fadeIn 0.6s ease-out;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.preview-header {
+  padding: 0 8px;
+  .section-tag {
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--color-primary);
+    letter-spacing: 2px;
+    margin: 0;
+  }
+}
+
+.preview-wrapper {
+  perspective: 1000px;
+  app-card {
+    display: block;
+  }
 }
 
 .card-form {
-  padding: 24px;
-  background: var(--color-bg-secondary);
-  border-radius: 16px;
-  border: 1px solid var(--color-border);
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid #E2E8F0;
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 8px;
+    
+    h3 {
+      font-size: 22px;
+      font-weight: 900;
+      margin-bottom: 4px;
+      color: #0F172A;
+    }
+    
+    p {
+      font-size: 13px;
+      color: #64748B;
+    }
+  }
 }
 
-.franchise-row {
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.franchise-display {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
   padding: 16px;
-  background: var(--color-bg-primary);
-  border-radius: 12px;
-  border: 1px solid var(--color-border);
-  color: var(--color-text-primary);
-  font-weight: 500;
+  border-radius: 20px;
+  background: #F8FAFC;
+  
+  .label {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--color-text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .franchise-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    padding: 6px 12px;
+    border-radius: 12px;
+    border: 1px solid #E2E8F0;
+    
+    img {
+      height: 18px;
+    }
+    
+    .name {
+      font-size: 10px;
+      font-weight: 900;
+      color: #0F172A;
+    }
+  }
+}
+
+.color-picker-box {
+  background: #F8FAFC;
+  padding: 16px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  label {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--color-text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
 }
 
 .color-row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
-  padding: 16px;
-  background: var(--color-bg-primary);
-  border-radius: 12px;
-  border: 1px solid var(--color-border);
+  gap: 16px;
 }
 
-.color-row label {
-  color: var(--color-text-primary);
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.color-row input {
+.color-preview {
   width: 48px;
   height: 48px;
-  border: 2px solid var(--color-border);
-  border-radius: 10px;
-  background: transparent;
-  padding: 0;
+  border-radius: 12px;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.hidden-picker {
+  display: none;
+}
+
+.color-select-btn {
+  background: #fff;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-primary);
   cursor: pointer;
   transition: all 0.2s ease;
   
-  &:hover {
-    border-color: var(--color-primary);
+  &:active {
+    transform: scale(0.95);
+    background: #F1F5F9;
   }
 }
 
-ion-button {
-  --border-radius: 8px;
-  font-weight: 600;
-  height: 48px;
-  margin-top: 24px;
+.submit-btn {
+  margin-top: 12px;
+  height: 60px;
 }
+
+/* Animations */
+.anim-fade-in { animation: fadeIn 0.8s ease; }
+.anim-pop { animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }

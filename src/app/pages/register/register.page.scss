@@ -1,137 +1,296 @@
 .register-content {
-  --background: var(--color-bg-primary);
+  --background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Arched Header */
+.arched-header {
+  position: relative;
+  height: 38vh;
+  background: #0F172A; 
+  border-radius: 0 0 50px 50px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding: 0 32px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: -12px;
+}
+
+.premium-back {
+  --color: #fff;
+  --icon-font-size: 24px;
+}
+
+.header-content {
+  z-index: 2;
+  margin-top: 20px;
+}
+
+.auth-title {
+  color: #fff;
+  font-size: 38px;
+  font-weight: 900;
+  line-height: 1.1;
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+.auth-subtitle {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+  font-weight: 500;
+  margin: 12px 0 0 0;
+}
+
+/* Form Styling */
+.auth-form-wrapper {
+  flex: 1;
+  padding: 40px 32px;
+  background: #fff;
+  margin-top: -20px;
+}
+
+.main-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.input-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #94A3B8;
+    padding-left: 4px;
+  }
+}
+
+/* Custom Select Styling */
+.premium-select-box {
+  background: #F1F5F9;
+  border-radius: 16px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  
+  ion-select {
+    width: 100%;
+    --padding-start: 0;
+    --padding-end: 0;
+    color: #0F172A;
+    font-weight: 600;
+    font-size: 15px;
+  }
+}
+
+.login-btn-premium {
+  --background: var(--color-lime);
+  --color: #000;
+  --border-radius: 16px;
+  --box-shadow: 0 10px 20px rgba(193, 242, 28, 0.2);
+  height: 58px;
+  font-weight: 900;
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin: 10px 0;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 10px;
+  padding-bottom: 40px;
+  p {
+    color: #94A3B8;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .action-link {
+    color: var(--color-lime);
+    font-weight: 800;
+    cursor: pointer;
+  }
+}
+
+.anim-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .register-container {
-  width: 100%;
-  max-width: 440px;
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 32px 16px;
+  gap: 40px;
+  max-width: 480px;
+  margin: 0 auto;
 }
 
 .branding {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  
+  .logo-orb {
+    width: 64px;
+    height: 64px;
+    background: var(--color-primary);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: #fff;
+  }
   
   .logo-text {
-    font-size: 2.5rem;
-    margin: 0;
-    color: var(--color-primary);
+    font-size: 28px;
     font-weight: 900;
-    letter-spacing: -0.04em;
+    margin: 0;
+    letter-spacing: -0.5px;
+    color: var(--color-text-primary);
   }
   
   .tagline {
-    margin-top: 4px;
-    font-size: 0.95rem;
+    font-size: 13px;
+    font-weight: 600;
     color: var(--color-text-dim);
-    font-weight: 500;
+    margin: 0;
   }
 }
 
 .auth-box {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 32px; // Ultra-rounded
-  padding: 36px 28px;
-  box-shadow: var(--shadow-lg);
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 32px;
+  padding: 32px 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03);
+  
   .form-header {
+    text-align: center;
     margin-bottom: 8px;
+    
     h2 {
-      font-size: 1.6rem;
-      margin: 0;
+      font-size: 20px;
       font-weight: 800;
-      color: var(--color-text-primary);
+      margin-bottom: 4px;
     }
+    
     p {
-      font-size: 0.9rem;
+      font-size: 13px;
       color: var(--color-text-dim);
-      margin: 4px 0 0 0;
     }
   }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 
 .field-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  
-  .label-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+
+  .group-label {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--color-text-dim);
     padding-left: 4px;
-    
-    ion-icon {
-      font-size: 18px;
-      color: var(--color-primary);
-    }
-    
-    span {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--color-text-primary);
-    }
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 }
 
-.select-item-rounded {
-  --background: #F1F5F9;
-  --border-radius: 18px;
-  --padding-start: 12px;
-  border: 1.5px solid transparent;
+.select-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #F8FAFC;
+  padding: 0 16px;
   border-radius: 18px;
+  height: 52px;
+  border: 1px solid transparent;
   transition: all 0.3s ease;
 
   &:focus-within {
+    background: #fff;
     border-color: var(--color-primary);
-    background: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
   }
-  
-  ion-select {
-    width: 100%;
-    font-weight: 500;
+
+  ion-icon {
+    font-size: 18px;
+    color: var(--color-primary);
   }
+}
+
+.nova-select {
+  --placeholder-color: #64748B;
+  --placeholder-opacity: 0.8;
+  font-size: 15px;
+  font-weight: 600;
+  width: 100%;
 }
 
 .submit-btn {
   margin-top: 12px;
-  height: 58px;
-  --background: var(--color-primary);
-  --box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+  height: 56px;
 }
 
 .switch-auth {
   text-align: center;
-  font-size: 1rem;
-  color: var(--color-text-secondary);
-
+  font-size: 14px;
+  font-weight: 600;
+  
   button {
     background: transparent;
     border: none;
     color: var(--color-primary);
-    font-weight: 700;
-    margin-left: 6px;
-    padding: 0;
-    cursor: pointer;
-    
-    &:hover {
-      text-decoration: underline;
-    }
+    font-weight: 800;
+    margin-left: 4px;
+    padding: 4px;
   }
 }
 
-.inline-error {
-  color: var(--color-error);
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding-left: 4px;
+.anim-fade-in {
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }

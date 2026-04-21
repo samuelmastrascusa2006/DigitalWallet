@@ -1,13 +1,13 @@
-<ion-header class="ion-no-border nova-glass">
-  <ion-toolbar color="transparent">
+<ion-header class="ion-no-border">
+  <ion-toolbar color="transparent" class="nova-glass">
     <div class="header-content">
-      <div class="user-info">
-        <span class="greeting">DASHBOARD/ACCESS:</span>
-        <span class="username">{{ greetingName | uppercase }}</span>
+      <div class="user-greeting-box">
+        <h1 class="greeting-text">Hola {{ greetingName | titlecase }}!</h1>
+        <p class="tagline-text">Ahorremos tu dinero.</p>
       </div>
       <div class="header-actions">
         <ion-button (click)="openNotificationsModal()" class="nova-btn-icon">
-          <ion-icon name="pulse-outline" class="neon-primary"></ion-icon>
+          <ion-icon name="notifications-outline" class="neon-primary"></ion-icon>
         </ion-button>
         <div class="avatar-container nova-glow" (click)="openProfileModal()">
           <span class="avatar-text">{{ profileInitials }}</span>
@@ -19,73 +19,47 @@
 
 <ion-content [fullscreen]="true" class="home-content ion-padding-bottom">
   <!-- Resumen de gastos del mes actual -->
-  <section class="monthly-summary nova-glass ion-margin-horizontal ion-margin-top">
+  <section class="monthly-summary nova-glass ion-margin-horizontal ion-margin-top anim-fade-in">
     <div class="summary-header">
-      <h3 class="nova-gradient-text">SYSTEM_ANALYTICS</h3>
+      <h3 class="nova-accent-text">RESUMEN DE GASTOS</h3>
       <div class="status-orb"></div>
     </div>
     
     <div *ngIf="!loadingStats" class="summary-stats">
       <div class="stat-box">
-        <span class="stat-label">TOTAL_OUTFLOW</span>
+        <span class="stat-label">GASTOS TOTALES</span>
         <span class="stat-value neon-error">${{ currentMonthStats.totalSpent | number:'1.0-0' }}</span>
       </div>
       
       <div class="stat-box">
-        <span class="stat-label">LOG_COUNT</span>
+        <span class="stat-label">TRANSACCIONES</span>
         <span class="stat-value neon-primary">{{ currentMonthStats.transactionCount }}</span>
       </div>
     </div>
-      <div class="stat-item">
-        <span class="stat-label">📈 Promedio</span>
-        <span class="stat-value">${{ currentMonthStats.averagePerTransaction | number:'1.0-0' }}</span>
-      </div>
 
     <div *ngIf="loadingStats" class="summary-stats">
       <div class="stat-item">
-        <ion-skeleton-text animated style="width: 100%; height: 50px;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 100%; height: 50px; border-radius: 12px;"></ion-skeleton-text>
       </div>
       <div class="stat-item">
-        <ion-skeleton-text animated style="width: 100%; height: 50px;"></ion-skeleton-text>
-      </div>
-      <div class="stat-item">
-        <ion-skeleton-text animated style="width: 100%; height: 50px;"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 100%; height: 50px; border-radius: 12px;"></ion-skeleton-text>
       </div>
     </div>
 
     <div *ngIf="!loadingStats && currentMonthStats.transactionCount === 0" class="summary-empty">
-      <p>Aún no tienes transacciones este mes. ¡Comienza a gastar!</p>
+      <p>Sin transacciones este mes.</p>
     </div>
   </section>
 
-  <section class="notifications-summary card-glass ion-margin-horizontal">
-    <div class="summary-header">
-      <h3>Notificaciones</h3>
-      <ion-button fill="clear" size="small" (click)="openNotificationsModal()">
-        Ver
-      </ion-button>
-    </div>
-    <div class="summary-body" *ngIf="latestNotification; else noNotifications">
-      <p class="summary-title">{{ latestNotification.title }}</p>
-      <p class="summary-text">{{ latestNotification.body }}</p>
-      <span class="summary-time">{{ formatNotificationTimestamp(latestNotification.createdAt) }}</span>
-    </div>
-    <ng-template #noNotifications>
-      <p class="summary-empty">Aún no tienes notificaciones recientes.</p>
-    </ng-template>
-  </section>
-
-  <section class="cards-section">
+  <section class="cards-section anim-slide-up">
     <div class="section-header">
-      <h2 class="section-title">ACTIVE_VAULTS</h2>
-      <div class="card-actions" *ngIf="activeCard">
-        <ion-button fill="clear" size="small" (click)="openCardEditor()">
-          <ion-icon slot="start" name="create-outline"></ion-icon>
-          Editar
+      <h2 class="section-title">MIS TARJETAS</h2>
+      <div class="card-actions">
+        <ion-button fill="clear" size="small" (click)="onAction('add')" class="add-card-btn anim-pop">
+          <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
         </ion-button>
-        <ion-button fill="clear" size="small" color="danger" (click)="confirmDeleteActiveCard()">
-          <ion-icon slot="start" name="trash-outline"></ion-icon>
-          Borrar
+        <ion-button fill="clear" size="small" (click)="openCardEditor()" *ngIf="activeCard">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
         </ion-button>
       </div>
     </div>
@@ -100,21 +74,21 @@
         <app-card [card]="card"></app-card>
       </button>
     </div>
-    <div class="empty-block card-glass" *ngIf="!loadingCards && cards.length === 0">
-      <ion-icon name="card-outline"></ion-icon>
+    <div class="empty-block nova-card-premium ion-margin-horizontal" *ngIf="!loadingCards && cards.length === 0">
+      <ion-icon name="card-outline" size="large"></ion-icon>
       <p>No tienes tarjetas registradas.</p>
-      <ion-button size="small" (click)="onAction('add')">Agregar tarjeta</ion-button>
+      <ion-button size="small" (click)="onAction('add')" class="submit-btn">Agregar tarjeta</ion-button>
     </div>
     <app-skeleton-loading *ngIf="loadingCards" [count]="1"></app-skeleton-loading>
   </section>
 
   <app-quick-actions (action)="onAction($event)"></app-quick-actions>
 
-  <section id="transaction-section" class="transactions-section ion-padding-horizontal">
+  <section id="transaction-section" class="transactions-section ion-padding-horizontal anim-slide-up">
     <div class="movements-header">
-      <h3 class="section-title">DATA_STREAMS</h3>
+      <h3 class="section-title">MOVIMIENTOS</h3>
       <ion-button fill="clear" size="small" (click)="toggleMovementView()">
-        {{ showAllMovements ? 'Ver resumen' : 'Ver todos' }}
+        {{ showAllMovements ? 'Resumen' : 'Ver todo' }}
       </ion-button>
     </div>
 

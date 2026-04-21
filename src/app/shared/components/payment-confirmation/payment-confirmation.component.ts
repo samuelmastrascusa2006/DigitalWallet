@@ -86,7 +86,7 @@ export class PaymentConfirmationComponent implements OnInit, OnDestroy {
         throw new Error(validation.error || 'Validación fallida');
       }
 
-      // Procesar pago con biometría
+      // Propremium pago con biometría
       const result = await this.VaultEngine.processPayment(
         this.userId,
         this.paymentRequest,
@@ -118,12 +118,12 @@ export class PaymentConfirmationComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Intenta procesar sin biometría (si está disponible)
+   * Intenta propremium sin biometría (si está disponible)
    */
   async confirmPaymentWithoutBiometric(): Promise<void> {
     const alert = await this.alertController.create({
       header: 'Confirmar sin Biometría',
-      message: 'Estás intentando procesar un pago sin validación biométrica. ¿Deseas continuar?',
+      message: 'Estás intentando propremium un pago sin validación biométrica. ¿Deseas continuar?',
       buttons: [
         {
           text: 'Cancelar',

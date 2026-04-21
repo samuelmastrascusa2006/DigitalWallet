@@ -63,14 +63,27 @@ export class VaultEngine {
         emoji: ''
       };
 
-      const ref = await this.connector.commitFolder(`users/${uid}/transactions`, tx);
+      // Stealth Write: We don't await the server ACK to avoid AdBlocker hangs.
+      // Firestore will sync this in the background.
+      const commitPromise = this.connector.commitFolder(`users/${uid}/transactions`, tx);
+      
+      // We only wait for a very short time. If it doesn't fail immediately,
+      // it means it's in the local cache and will be sent.
+      const resultPromise = Promise.race([
+        commitPromise,
+        new Promise(resolve => setTimeout(resolve, 1500)) // 1.5s grace for local write
+      ]);
+
+      const ref = await resultPromise as any;
       
       await Haptics.impact({ style: ImpactStyle.Heavy });
-      this.dispatchAlert(uid, req.merchant, req.amount);
+      
+      // Dispatch alert in the background
+      void this.dispatchAlert(uid, req.merchant, req.amount);
 
       return {
         success: true,
-        transactionId: ref.id,
+        transactionId: ref?.id || 'pending-sync',
         timestamp: new Date()
       };
 

@@ -63,6 +63,9 @@ export class LoginPage implements OnInit {
     try {
       const result = await this.IdentityCore.startGoogleLogin();
       if (result === 'redirecting') {
+        // El navegador va a redirigir, pero por seguridad cerramos el loading 
+        // después de 5s por si el redirect es bloqueado silenciosamente.
+        setTimeout(() => this.LoadingBridge.hide(), 5000);
         return;
       }
       await this.router.navigate(['/home']);

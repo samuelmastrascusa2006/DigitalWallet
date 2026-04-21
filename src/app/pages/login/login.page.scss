@@ -1,108 +1,269 @@
 .login-content {
-  --background: var(--color-bg-primary);
+  --background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Arched Header */
+.arched-header {
+  position: relative;
+  height: 38vh;
+  background: #0F172A; // Dark Slate from screenshots
+  border-radius: 0 0 50px 50px;
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.header-content {
+  z-index: 2;
+  margin-top: 20px;
+}
+
+.auth-title {
+  color: #fff;
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.1;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.auth-subtitle {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+  font-weight: 500;
+  margin: 8px 0 0 0;
+}
+
+/* Form Styling */
+.auth-form-wrapper {
+  flex: 1;
+  padding: 40px 32px;
+  background: #fff;
+  margin-top: -20px;
+}
+
+.main-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.input-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #94A3B8;
+    padding-left: 4px;
+  }
+}
+
+.forgot-link {
+  text-align: right;
+  button {
+    background: transparent;
+    color: var(--color-lime);
+    font-size: 13px;
+    font-weight: 800;
+    padding: 8px 0;
+  }
+}
+
+.login-btn-premium {
+  --background: var(--color-lime);
+  --color: #000;
+  --border-radius: 16px;
+  --box-shadow: 0 10px 20px rgba(193, 242, 28, 0.2);
+  height: 58px;
+  font-weight: 900;
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin: 10px 0;
+}
+
+.divider {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 8px 0;
+  
+  span {
+    color: #94A3B8;
+    font-size: 12px;
+    font-weight: 600;
+  }
 }
 
-.auth-shell {
+.google-btn-premium {
+  --background: #fff;
+  --color: #000;
+  --border-radius: 16px;
+  border: 1px solid #F1F5F9;
+  height: 58px;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+
+  .social-icon {
+    height: 24px;
+    margin-right: 12px;
+  }
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 10px;
+  p {
+    color: #94A3B8;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .action-link {
+    color: var(--color-lime);
+    font-weight: 800;
+    cursor: pointer;
+  }
+}
+
+.biometric-trigger {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: #94A3B8;
+  cursor: pointer;
+
+  ion-icon {
+    font-size: 32px;
+  }
+
+  span {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+}
+
+.anim-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 32px 16px;
+  gap: 40px;
+}
+
+.branding {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  
+  .logo-orb {
+    width: 72px;
+    height: 72px;
+    background: var(--color-primary);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    color: #fff;
+  }
+  
+  .logo-text {
+    font-size: 32px;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: -1px;
+    color: var(--color-text-primary);
+  }
+  
+  .tagline {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-dim);
+    margin: 0;
+  }
+}
+
+.auth-box {
   width: 100%;
   max-width: 420px;
-  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 32px;
+  padding: 40px 24px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
-}
-
-.brand-block {
-  text-align: center;
+  gap: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03);
   
-  h1 {
-    font-size: 2.75rem;
-    margin: 0;
-    color: var(--color-primary);
-    font-weight: 900;
-    letter-spacing: -0.04em;
-  }
-  
-  p {
-    margin-top: 4px;
-    font-size: 0.85rem;
-    color: var(--color-text-dim);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-  }
-}
-
-.auth-form {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 28px;
-  padding: 40px 32px;
-  box-shadow: var(--shadow-lg);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-
-  h2 {
-    font-size: 1.5rem;
-    margin: 0 0 8px 0;
-    font-weight: 800;
-    color: var(--color-text-primary);
-    letter-spacing: -0.02em;
+  .form-header {
+    text-align: center;
+    margin-bottom: 8px;
+    
+    h2 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    
+    p {
+      font-size: 14px;
+      color: var(--color-text-dim);
+    }
   }
 }
 
-.primary-btn {
-  margin-top: 12px;
+.submit-btn {
+  margin-top: 8px;
   height: 56px;
-  --background: var(--color-primary);
-  --color: #FFFFFF;
-  --box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
-  font-size: 1rem;
+}
+
+.biometric-btn {
+  --color: var(--color-text-primary);
+  --border-color: #E2E8F0;
+  height: 50px;
 }
 
 .google-btn {
-  --background: #FFFFFF;
-  --color: var(--color-text-primary);
-  --border-color: var(--color-border);
-  --border-style: solid;
-  --border-width: 1px;
-  height: 56px;
-  margin-top: 8px;
+  --color: #475569;
+  height: 50px;
   font-weight: 600;
-  --box-shadow: var(--shadow-sm);
-
-  ion-icon {
-    margin-right: 12px;
-    font-size: 22px;
-    color: #DB4437; // Google Red icon color
-  }
-
-  &:hover {
-    --background: #F8FAFC;
-  }
 }
 
 .switch-auth {
   text-align: center;
-  font-size: 0.95rem;
-  color: var(--color-text-secondary);
-  font-weight: 500;
-
+  font-size: 15px;
+  font-weight: 600;
+  
   button {
     background: transparent;
     border: none;
     color: var(--color-primary);
-    font-weight: 700;
-    margin-left: 6px;
-    padding: 0;
-    cursor: pointer;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
+    font-weight: 800;
+    margin-left: 4px;
+    padding: 4px;
   }
 }

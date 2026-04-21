@@ -103,7 +103,11 @@ export class IdentityCore {
       return 'redirecting';
     }
 
-    const result = await GoogleSignIn.signIn();
+    const timeoutPromise = new Promise<never>((_, reject) => 
+      setTimeout(() => reject(new Error('TIMEOUT: El servicio de Google no respondió. Verifica tu conexión o AdBlocker.')), 15000)
+    );
+
+    const result = await Promise.race([GoogleSignIn.signIn(), timeoutPromise]) as SignInResult;
     return this.processGoogleResult(result);
   }
 
@@ -113,7 +117,11 @@ export class IdentityCore {
     this.verifySystemConfig();
     await this.prepareGoogleEngine();
 
-    const result = await GoogleSignIn.handleRedirectCallback();
+    const timeoutPromise = new Promise<never>((_, reject) => 
+      setTimeout(() => reject(new Error('TIMEOUT: No se recibió respuesta de Google. Tu AdBlocker (McAfee/Blur) podría estar bloqueando el retorno de datos.')), 15000)
+    );
+
+    const result = await Promise.race([GoogleSignIn.handleRedirectCallback(), timeoutPromise]) as SignInResult;
     return this.processGoogleResult(result);
   }
 

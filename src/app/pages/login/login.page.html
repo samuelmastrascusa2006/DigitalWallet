@@ -1,72 +1,69 @@
-<ion-content [fullscreen]="true" class="login-content ion-padding">
-  <div class="login-container">
-    <div class="branding">
-      <div class="logo-orb nova-glow">
-        <ion-icon name="planet-outline"></ion-icon>
-      </div>
-      <h1 class="nova-gradient-text">NOVA_VAULT</h1>
-      <p class="tagline">SECURE ASSET ENGINE v1.0</p>
+<ion-content [fullscreen]="true" class="login-content">
+  <div class="arched-header">
+    <div class="header-overlay"></div>
+    <div class="header-content anim-fade-in">
+      <h1 class="auth-title">Sign in to your<br>Account</h1>
+      <p class="auth-subtitle">Sign in to your Account</p>
     </div>
+  </div>
 
-    <form class="auth-form nova-glass" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <div class="form-header">
-        <h2>AUTHENTICATE</h2>
+  <div class="auth-form-wrapper">
+    <form class="main-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      
+      <div class="input-block">
+        <label>Email</label>
+        <app-custom-input
+          placeholder="ferdinand@gmail.com"
+          type="email"
+          formControlName="email"
+          [showError]="controlHasError('email', 'required') || controlHasError('email', 'email')"
+          errorMessage="Required">
+        </app-custom-input>
       </div>
-      <app-custom-input
-        label="Correo electrónico"
-        placeholder="correo@ejemplo.com"
-        type="email"
-        icon="mail-outline"
-        formControlName="email"
-        [showError]="controlHasError('email', 'required') || controlHasError('email', 'email')"
-        [errorMessage]="controlHasError('email', 'required') ? 'El correo es obligatorio' : 'Ingresa un correo válido'">
-      </app-custom-input>
 
-      <app-custom-input
-        label="Contraseña"
-        placeholder="Tu contraseña"
-        type="password"
-        icon="lock-closed-outline"
-        formControlName="password"
-        [showError]="controlHasError('password', 'required') || controlHasError('password', 'minlength')"
-        [errorMessage]="controlHasError('password', 'required') ? 'La contraseña es obligatoria' : 'Mínimo 6 caracteres'">
-      </app-custom-input>
+      <div class="input-block">
+        <label>Password</label>
+        <app-custom-input
+          placeholder="••••••••"
+          type="password"
+          formControlName="password"
+          [showError]="controlHasError('password', 'required') || controlHasError('password', 'minlength')"
+          errorMessage="Required">
+        </app-custom-input>
+        <div class="forgot-link">
+          <button type="button">Forgot Password?</button>
+        </div>
+      </div>
 
       <ion-button
         expand="block"
         type="submit"
-        class="primary-btn"
+        class="login-btn-premium"
         [disabled]="submitting">
-        Ingresar
+        LOGIN
       </ion-button>
 
-      <ion-button
-        *ngIf="biometricQuickAccess"
-        expand="block"
-        type="button"
-        fill="outline"
-        class="secondary-btn"
-        [disabled]="submitting"
-        (click)="loginWithBiometric()">
-        <ion-icon slot="start" name="finger-print-outline"></ion-icon>
-        Ingreso biométrico
-      </ion-button>
+      <div class="divider">
+        <span>Or login with</span>
+      </div>
 
       <ion-button
         expand="block"
-        type="button"
         fill="clear"
-        class="google-btn"
-        [disabled]="submitting"
+        class="google-btn-premium"
         (click)="loginWithGoogle()">
-        <ion-icon slot="start" name="logo-google"></ion-icon>
-        Ingresar con Google
+        <img src="assets/icon/google-logo.svg" alt="Google" class="social-icon" onerror="this.src='https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png'">
+        GOOGLE
       </ion-button>
-    </form>
 
-    <p class="switch-auth">
-      ¿No tienes cuenta?
-      <button type="button" (click)="goToRegister()">Regístrate</button>
-    </p>
+      <div class="auth-footer">
+        <p>Don't have an account? <span class="action-link" (click)="goToRegister()">Register</span></p>
+      </div>
+
+      <div class="biometric-trigger" *ngIf="biometricQuickAccess" (click)="loginWithBiometric()">
+        <ion-icon name="finger-print-outline"></ion-icon>
+        <span>BIOMETRIC SIGN IN</span>
+      </div>
+    </form>
   </div>
 </ion-content>

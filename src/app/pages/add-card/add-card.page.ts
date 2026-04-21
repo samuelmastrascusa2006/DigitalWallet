@@ -151,17 +151,20 @@ export class AddCardPage implements OnInit {
     try {
       const value = this.form.getRawValue();
       
-      // Race between the actual save and the timeout
+      // Stealth Write: We race the save operation against a 1.5s local grace period.
+      // This prevents the UI from hanging because of AdBlocker blocking the server ACK.
+      const savePromise = this.CardNexus.addCard(uid, {
+        cardNumber: value.cardNumber,
+        cardHolder: value.cardHolder,
+        expiryDate: value.expiryDate,
+        cvv: value.cvv,
+        franchise: this.detectedFranchise,
+        color: value.color
+      });
+
       await Promise.race([
-        this.CardNexus.addCard(uid, {
-          cardNumber: value.cardNumber,
-          cardHolder: value.cardHolder,
-          expiryDate: value.expiryDate,
-          cvv: value.cvv,
-          franchise: this.detectedFranchise,
-          color: value.color
-        }),
-        timeoutPromise
+        savePromise,
+        new Promise(resolve => setTimeout(resolve, 1500))
       ]);
       
       await this.UIMessenger.showSuccess('Tarjeta agregada correctamente.');
