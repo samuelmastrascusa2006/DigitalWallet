@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">NovaVault</string>
+    <string name="title_activity_main">NovaVault</string>
+    <string name="package_name">com.novavault.app</string>
+    <string name="custom_url_scheme">com.novavault.app</string>
+</resources>

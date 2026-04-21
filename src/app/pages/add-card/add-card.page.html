@@ -1,0 +1,66 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="transparent">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Agregar tarjeta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="add-card-content ion-padding">
+  <div class="preview-wrapper" #cardPreview>
+    <app-card [card]="previewCard"></app-card>
+  </div>
+
+  <form class="card-form card-glass" [formGroup]="form" (ngSubmit)="saveCard()">
+    <app-custom-input
+      label="Número de tarjeta"
+      placeholder="1234 5678 9012 3456"
+      icon="card-outline"
+      formControlName="cardNumber"
+      [showError]="controlHasError('cardNumber', 'required') || controlHasError('cardNumber', 'minlength') || luhnErrorVisible"
+      [errorMessage]="controlHasError('cardNumber', 'required') ? 'Ingresa el número de tarjeta' : controlHasError('cardNumber', 'minlength') ? 'Debe tener 16 dígitos' : 'Número inválido por Luhn'">
+    </app-custom-input>
+
+    <app-custom-input
+      label="Titular"
+      placeholder="Nombre del titular"
+      icon="person-outline"
+      formControlName="cardHolder"
+      [showError]="controlHasError('cardHolder', 'required')"
+      errorMessage="Ingresa el nombre del titular">
+    </app-custom-input>
+
+    <app-custom-input
+      label="Fecha de expiración"
+      placeholder="MM/YY"
+      icon="calendar-outline"
+      formControlName="expiryDate"
+      [showError]="controlHasError('expiryDate', 'required') || controlHasError('expiryDate', 'pattern')"
+      [errorMessage]="controlHasError('expiryDate', 'required') ? 'Ingresa la fecha de expiración' : 'Formato válido: MM/YY'">
+    </app-custom-input>
+
+    <app-custom-input
+      label="CVV"
+      placeholder="123"
+      icon="lock-closed-outline"
+      formControlName="cvv"
+      [showError]="controlHasError('cvv', 'required') || controlHasError('cvv', 'pattern')"
+      [errorMessage]="controlHasError('cvv', 'required') ? 'Ingresa el CVV' : 'Debe tener 3 o 4 dígitos'">
+    </app-custom-input>
+
+    <div class="franchise-row">
+      <span>Franquicia detectada:</span>
+      <ion-chip [color]="detectedFranchise === 'unknown' ? 'medium' : 'primary'">
+        {{ detectedFranchise | uppercase }}
+      </ion-chip>
+    </div>
+
+    <div class="color-row">
+      <label for="card-color">Color de la tarjeta</label>
+      <input id="card-color" type="color" formControlName="color" />
+    </div>
+
+    <ion-button expand="block" type="submit" [disabled]="form.invalid">Guardar tarjeta</ion-button>
+  </form>
+</ion-content>

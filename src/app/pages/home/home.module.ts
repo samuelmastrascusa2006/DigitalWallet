@@ -1,0 +1,24 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { IonicModule } from '@ionic/angular';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+
+import { HomePageRoutingModule } from './home-routing.module';
+import { SharedModule } from '../../shared/shared.module';
+
+import { HomePage } from './home.page';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    SharedModule,
+    PickerModule,
+    HomePageRoutingModule
+  ],
+  declarations: [HomePage]
+})
+export class HomePageModule {}

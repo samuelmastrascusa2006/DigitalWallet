@@ -1,0 +1,79 @@
+.add-card-content {
+  --background: var(--color-bg-primary);
+}
+
+.preview-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0 32px;
+  perspective: 1200px;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.card-form {
+  padding: 24px;
+  background: var(--color-bg-secondary);
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+}
+
+.franchise-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: var(--color-bg-primary);
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.color-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: var(--color-bg-primary);
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+}
+
+.color-row label {
+  color: var(--color-text-primary);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.color-row input {
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    border-color: var(--color-primary);
+  }
+}
+
+ion-button {
+  --border-radius: 8px;
+  font-weight: 600;
+  height: 48px;
+  margin-top: 24px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,51 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="transparent">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Pagar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="payment-content ion-padding">
+  <section class="payment-shell">
+    <h2>Selecciona tarjeta</h2>
+
+    <div class="cards-scroll" *ngIf="!loading && cards.length > 0">
+      <button
+        type="button"
+        class="card-select"
+        *ngFor="let card of cards; let i = index"
+        [style.--card-index]="i"
+        [class.active]="card.id === selectedCardId"
+        [class.flipping]="card.id === flippingCardId"
+        (click)="onCardSelected(card.id)">
+        <div class="card-shell">
+          <app-card [card]="card"></app-card>
+        </div>
+      </button>
+    </div>
+
+    <div class="empty-state card-glass" *ngIf="!loading && cards.length === 0">
+      <ion-icon name="card-outline"></ion-icon>
+      <p>No tienes tarjetas para pagar.</p>
+      <ion-button size="small" (click)="goToAddCard()">Agregar tarjeta</ion-button>
+    </div>
+
+    <app-skeleton-loading *ngIf="loading" [count]="1"></app-skeleton-loading>
+
+    <div class="payment-cta card-glass" *ngIf="selectedCard">
+      <p>Abre el simulador para generar comercio y monto aleatorios, luego confirma el pago con tu biometría.</p>
+      <p class="bio-note" *ngIf="userProfile?.biometricEnabled">
+        ✓ Tu dispositivo tiene biometría habilitada para este pago.
+      </p>
+      <p class="bio-note-warning" *ngIf="!userProfile?.biometricEnabled">
+        ⚠️ La biometría está deshabilitada. Se te pedirá confirmación para proceder.
+      </p>
+      <ion-button expand="block" [disabled]="processing" (click)="openSimulator()">
+        <ion-icon slot="start" name="scan-outline"></ion-icon>
+        {{ processing ? 'Procesando...' : '👉 Confirmar pago' }}
+      </ion-button>
+    </div>
+  </section>
+</ion-content>

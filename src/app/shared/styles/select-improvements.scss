@@ -1,0 +1,75 @@
+/* 
+ * Select and Picker Enhancements
+ * This file contains additional styling for improved select components
+ * and enhanced scroll indicators
+ */
+
+/* Make scrollbars visible with indicator style */
+ion-popover ion-content,
+ion-action-sheet ion-content,
+.select-popover ion-content {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+/* WebKit browsers scrollbar styling */
+ion-popover ion-content::-webkit-scrollbar,
+ion-action-sheet ion-content::-webkit-scrollbar,
+.select-popover ion-content::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+ion-popover ion-content::-webkit-scrollbar-track,
+ion-action-sheet ion-content::-webkit-scrollbar-track,
+.select-popover ion-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+ion-popover ion-content::-webkit-scrollbar-thumb,
+ion-action-sheet ion-content::-webkit-scrollbar-thumb,
+.select-popover ion-content::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+  border: 1px solid transparent;
+  background-clip: content-box;
+}
+
+ion-popover ion-content::-webkit-scrollbar-thumb:hover,
+ion-action-sheet ion-content::-webkit-scrollbar-thumb:hover,
+.select-popover ion-content::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+  background-clip: content-box;
+}
+
+/* Slim select items in picker/action sheet */
+.select-popover ion-item,
+.select-popover ion-radio,
+.ion-action-sheet-group ion-item {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --min-height: 40px;
+  font-size: 14px;
+}
+
+/* Scroll indicator visual cue */
+.has-scrollable-content::after {
+  content: '';
+  position: absolute;
+  right: 2px;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--color-border) 0%, transparent 100%);
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Animate scroll indicator on scroll */
+@keyframes scrollIndicator {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}

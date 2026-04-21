@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "725794322884",
+    "project_id": "digitalwallet-a096b",
+    "storage_bucket": "digitalwallet-a096b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:725794322884:android:0567063618868027410c91",
+        "android_client_info": {
+          "package_name": "com.novavault.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "725794322884-09bmt7s906q9t42qjv87grnnge8npnmd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.novavault.app",
+            "certificate_hash": "2a36fe8f09345ea5fb183290ff6147fbdfbe9ef2"
+          }
+        },
+        {
+          "client_id": "725794322884-5k49648303s2uqiqtam396p2sjfpojom.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAihVW8U37Pew8Rmg3HYzcV1XGAr2PGPjM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "725794322884-5k49648303s2uqiqtam396p2sjfpojom.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

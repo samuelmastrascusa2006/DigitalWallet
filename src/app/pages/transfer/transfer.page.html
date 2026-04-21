@@ -1,0 +1,99 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="transparent">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Transferir Dinero</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="transfer-content ion-padding">
+  <section class="transfer-shell">
+    <div class="form-container card-glass">
+      <form [formGroup]="transferForm" (ngSubmit)="onSubmit()">
+        <!-- Seleccionar Tarjeta -->
+        <div class="form-group">
+          <label>Desde tarjeta</label>
+          <ion-select
+            formControlName="cardId"
+            interface="popover"
+            placeholder="Selecciona una tarjeta">
+            <ion-select-option *ngFor="let card of cards" [value]="card.id">
+            {{ card.franchise | titlecase }} - **** {{ card.cardNumber.slice(-4) }}
+            </ion-select-option>
+          </ion-select>
+          <small class="error" *ngIf="transferForm.get('cardId')?.invalid && transferForm.get('cardId')?.touched">
+            Selecciona una tarjeta
+          </small>
+        </div>
+
+        <!-- Cuenta Destinatario -->
+        <div class="form-group">
+          <label>Cuenta del destinatario</label>
+          <ion-input
+            type="text"
+            formControlName="recipientAccount"
+            placeholder="Número de cuenta o email"
+            clearInput>
+          </ion-input>
+          <small class="error" *ngIf="transferForm.get('recipientAccount')?.invalid && transferForm.get('recipientAccount')?.touched">
+            Ingresa una cuenta válida (mínimo 10 caracteres)
+          </small>
+        </div>
+
+        <!-- Monto -->
+        <div class="form-group">
+          <label>Monto a transferir</label>
+          <div class="amount-input-wrapper">
+            <span class="currency">$</span>
+            <ion-input
+              type="number"
+              formControlName="amount"
+              placeholder="0.00"
+              step="0.01"
+              min="0">
+            </ion-input>
+          </div>
+          <small class="error" *ngIf="transferForm.get('amount')?.invalid && transferForm.get('amount')?.touched">
+            Ingresa un monto válido mayor a 0
+          </small>
+        </div>
+
+        <!-- Concepto -->
+        <div class="form-group">
+          <label>Concepto</label>
+          <ion-input
+            type="text"
+            formControlName="concept"
+            placeholder="Ej: Pago de servicios"
+            clearInput>
+          </ion-input>
+        </div>
+
+        <!-- Botón Enviar -->
+        <ion-button
+          expand="block"
+          type="submit"
+          [disabled]="!transferForm.valid || processing"
+          class="submit-btn">
+          <ion-icon slot="start" name="send-outline"></ion-icon>
+          {{ processing ? 'Procesando...' : 'Transferir Ahora' }}
+        </ion-button>
+      </form>
+    </div>
+
+    <!-- Estado de Carga -->
+    <div class="loading-state" *ngIf="loading">
+      <app-skeleton-loading [count]="4"></app-skeleton-loading>
+    </div>
+
+    <!-- Estado Vacío -->
+    <div class="empty-state card-glass" *ngIf="!loading && cards.length === 0">
+      <ion-icon name="card-outline"></ion-icon>
+      <p>No tienes tarjetas para transferir.</p>
+      <ion-button size="small" (click)="goToAddCard()">
+        Agregar tarjeta
+      </ion-button>
+    </div>
+  </section>
+</ion-content>
