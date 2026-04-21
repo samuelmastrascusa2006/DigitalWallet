@@ -1,0 +1,123 @@
+/*
+ * NovaVault | Nova Light Aesthetic Overhaul v4.2
+ * Pro-Rounded, High-Contrast UI
+ */
+
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* App-specific Global Fixes */
+@import "app/shared/styles/select-improvements.scss";
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--ion-font-family);
+  margin: 0;
+}
+
+ion-content {
+  --background: var(--color-bg-primary);
+}
+
+/* PREMIUM ROUNDED TYPOGRAPHY */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text-primary);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+p {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* COMPONENT OVERHAUL: ROUNDED & SOFT */
+
+ion-card {
+  --background: #FFFFFF;
+  --border-radius: 24px; // More rounded as requested
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  margin: 0;
+  overflow: hidden;
+}
+
+ion-button {
+  --border-radius: 16px; // More rounded
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  &:active {
+    transform: scale(0.96);
+  }
+}
+
+/* ULTRA-ROUNDED INPUTS */
+ion-input, ion-textarea {
+  --background: #F1F5F9; // Soft touch of gray
+  --color: var(--color-text-primary);
+  --placeholder-color: #94A3B8;
+  --padding-start: 20px;
+  --padding-end: 20px;
+  border: 1.5px solid transparent; 
+  border-radius: 18px; // Rounded as requested
+  transition: all 0.3s ease;
+  margin-top: 6px;
+
+  &:focus-within {
+    border-color: var(--color-primary);
+    background: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+  }
+}
+
+/* TOAST FIX */
+ion-toast {
+  --background: #1E293B; // Slate 800 for strong contrast
+  --color: #FFFFFF;
+  --border-radius: 16px;
+  --button-color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* MODAL REFINEMENT */
+ion-modal {
+  --background: #FFFFFF;
+  --border-radius: 32px 32px 0 0;
+  
+  &::part(content) {
+    background: #FFFFFF;
+    border-top: 1px solid var(--color-border);
+  }
+}
+
+/* GLASS EFFECT LIGHT */
+.nova-glass {
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+.nova-card-premium {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 28px;
+  padding: 28px;
+  box-shadow: var(--shadow-lg);
+}

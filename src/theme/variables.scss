@@ -1,0 +1,52 @@
+/**
+ * NovaVault | Nova Light Design System v4.0
+ * High-Contrast Light Theme for Maximum Readability
+ */
+
+:root {
+  // LIGHT MODE PALETTE
+  // Tone 1: Soft Off-white Background
+  --color-bg-primary: #F8FAFC;    
+  --color-bg-secondary: #F1F5F9;  
+  
+  // Tone 2: Corporate Primary
+  --color-primary: #2563EB;       // Royal Blue
+  --color-primary-rgb: 37, 99, 235;
+  --color-primary-dark: #1D4ED8;
+  
+  // Tone 3: Dark Slate Typography (High Contrast)
+  --color-text-primary: #0F172A;  // Dark Blue-Black
+  --color-text-secondary: #334155; // Slate Gray
+  --color-text-dim: #64748B;      // Muted Steel
+  
+  // Clean Accents
+  --color-accent: #059669;        // Green
+  --color-error: #DC2626;         // Red
+  --color-warning: #D97706;       // Amber
+
+  // Surfaces
+  --color-surface: #FFFFFF;       // Pure White
+  --color-border: #E2E8F0;        // Soft Border
+  
+  // Ionic Core Overrides (Enforce Light Theme)
+  --ion-font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+  --ion-color-primary: var(--color-primary);
+  --ion-color-primary-rgb: var(--color-primary-rgb);
+  --ion-color-primary-contrast: #FFFFFF;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+
+  --ion-background-color: var(--color-bg-primary);
+  --ion-background-color-rgb: 248, 250, 252;
+  --ion-text-color: var(--color-text-primary);
+  --ion-text-color-rgb: 15, 23, 42;
+  
+  --ion-toolbar-background: #FFFFFF;
+  --ion-toolbar-color: var(--color-text-primary);
+  --ion-item-background: #FFFFFF;
+  --ion-border-color: var(--color-border);
+  
+  // Shadows (Soft & Modern)
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
