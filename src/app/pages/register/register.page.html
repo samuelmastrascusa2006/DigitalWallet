@@ -1,0 +1,107 @@
+<ion-content [fullscreen]="true" class="register-content ion-padding">
+  <div class="register-container">
+    <div class="branding">
+      <h1 class="logo-text">NovaVault</h1>
+      <p class="tagline">Crea tu cuenta e inicia tu viaje</p>
+    </div>
+
+    <form class="auth-box" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-header">
+        <h2>Registro de Usuario</h2>
+        <p>Ingresa tus datos personales para continuar</p>
+      </div>
+
+      <app-custom-input
+        label="Nombre"
+        placeholder="Tu nombre"
+        icon="person-outline"
+        formControlName="nombre"
+        [showError]="controlHasError('nombre', 'required')"
+        errorMessage="El nombre es obligatorio">
+      </app-custom-input>
+
+      <app-custom-input
+        label="Apellido"
+        placeholder="Tu apellido"
+        icon="person-outline"
+        formControlName="apellido"
+        [showError]="controlHasError('apellido', 'required')"
+        errorMessage="El apellido es obligatorio">
+      </app-custom-input>
+
+      <div class="field-group">
+        <div class="label-row">
+          <ion-icon name="id-card-outline"></ion-icon>
+          <span>Tipo de documento</span>
+        </div>
+        <ion-item lines="none" class="select-item-rounded">
+          <ion-select formControlName="tipoDocumento" placeholder="Selecciona uno" labelPlacement="stacked">
+            <ion-select-option *ngFor="let type of documentTypes" [value]="type">{{ type }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <span class="inline-error" *ngIf="controlHasError('tipoDocumento', 'required')">Este campo es obligatorio</span>
+      </div>
+
+      <app-custom-input
+        label="Número de documento"
+        placeholder="Ej. 12345678"
+        icon="card-outline"
+        formControlName="numeroDocumento"
+        [showError]="controlHasError('numeroDocumento', 'required')"
+        errorMessage="El documento es obligatorio">
+      </app-custom-input>
+
+      <div class="field-group">
+        <div class="label-row">
+          <ion-icon name="globe-outline"></ion-icon>
+          <span>País</span>
+        </div>
+        <ion-item lines="none" class="select-item-rounded">
+          <ion-select formControlName="pais" placeholder="Selecciona tu país" labelPlacement="stacked">
+            <ion-select-option *ngFor="let country of countries" [value]="country">{{ country }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <span class="inline-error" *ngIf="controlHasError('pais', 'required')">Este campo es obligatorio</span>
+      </div>
+
+      <app-custom-input
+        label="Correo electrónico"
+        placeholder="correo@ejemplo.com"
+        type="email"
+        icon="mail-outline"
+        formControlName="email"
+        [showError]="controlHasError('email', 'required') || controlHasError('email', 'email')"
+        [errorMessage]="controlHasError('email', 'required') ? 'El correo es obligatorio' : 'Ingresa un correo válido'">
+      </app-custom-input>
+
+      <app-custom-input
+        label="Contraseña"
+        placeholder="Mínimo 6 caracteres"
+        type="password"
+        icon="lock-closed-outline"
+        formControlName="password"
+        [showError]="controlHasError('password', 'required') || controlHasError('password', 'minlength')"
+        [errorMessage]="controlHasError('password', 'required') ? 'La contraseña es obligatoria' : 'Mínimo 6 caracteres'">
+      </app-custom-input>
+
+      <app-custom-input
+        label="Confirmar contraseña"
+        placeholder="Repite tu contraseña"
+        type="password"
+        icon="shield-checkmark-outline"
+        formControlName="confirmPassword"
+        [showError]="controlHasError('confirmPassword', 'required') || hasPasswordMismatch()"
+        [errorMessage]="controlHasError('confirmPassword', 'required') ? 'Debes confirmar la contraseña' : 'Las contraseñas no coinciden'">
+      </app-custom-input>
+
+      <ion-button expand="block" type="submit" [disabled]="submitting" class="submit-btn">
+        Crear cuenta
+      </ion-button>
+    </form>
+
+    <p class="switch-auth">
+      ¿Ya tienes cuenta?
+      <button type="button" (click)="goToLogin()">Inicia sesión</button>
+    </p>
+  </div>
+</ion-content>
