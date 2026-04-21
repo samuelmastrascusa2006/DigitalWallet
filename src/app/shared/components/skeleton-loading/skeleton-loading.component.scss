@@ -1,0 +1,25 @@
+.skeleton-container {
+  width: 100%;
+}
+
+.skeleton-item {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.skeleton-info {
+  flex: 1;
+  margin-left: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+ion-skeleton-text {
+  --background: rgba(255, 255, 255, 0.05);
+  --background-rgb: 255, 255, 255;
+  --border-radius: 4px;
+}

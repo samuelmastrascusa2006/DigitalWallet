@@ -1,0 +1,27 @@
+<div class="transaction-list">
+  <div class="list-header">
+    <h3 class="list-title">{{ title | uppercase }}</h3>
+    <span class="list-count" *ngIf="transactions.length > 0">
+      {{ transactions.length }} MOVIMIENTOS
+    </span>
+  </div>
+
+  <div *ngIf="loading">
+    <app-skeleton-loading [count]="3"></app-skeleton-loading>
+  </div>
+
+  <div *ngIf="!loading && transactions.length === 0" class="empty-state">
+    <div class="empty-icon-wrapper nova-glow">
+      <ion-icon name="receipt-outline" class="empty-icon"></ion-icon>
+    </div>
+    <p>SIN DATOS EN EL VAULT</p>
+  </div>
+
+  <div *ngIf="!loading">
+    <app-transaction-item
+      *ngFor="let tx of transactions"
+      [transaction]="tx"
+      (longPress)="onTransactionLongPress($event)"
+    ></app-transaction-item>
+  </div>
+</div>

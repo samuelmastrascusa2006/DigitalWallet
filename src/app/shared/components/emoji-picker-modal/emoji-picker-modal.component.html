@@ -1,0 +1,24 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="transparent" class="nova-glass">
+    <ion-title class="nova-gradient-text">SELECT REACTION</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon name="close-outline" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="picker-container">
+    <emoji-mart
+      [title]="'Choose Asset Emoji'"
+      [emoji]="'point_up'"
+      [isNative]="true"
+      [darkMode]="true"
+      [set]="'apple'"
+      (emojiSelect)="selectEmoji($event)"
+      [style]="{ width: '100%', border: 'none', background: 'transparent' }">
+    </emoji-mart>
+  </div>
+</ion-content>

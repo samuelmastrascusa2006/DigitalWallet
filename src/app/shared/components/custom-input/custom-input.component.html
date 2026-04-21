@@ -1,0 +1,23 @@
+<div class="custom-input-wrapper" [class.has-error]="showError" [class.has-focus]="isFocused">
+  <label class="custom-input-label" *ngIf="label">{{ label }}</label>
+  <div class="input-container">
+    <ion-icon *ngIf="icon" [name]="icon" class="input-icon"></ion-icon>
+    <input
+      [type]="showPassword ? 'text' : type"
+      [placeholder]="placeholder"
+      [value]="value"
+      (input)="onInput($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+      [disabled]="disabled"
+      class="custom-input"
+    />
+    <ion-icon
+      *ngIf="type === 'password'"
+      [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+      class="toggle-password"
+      (click)="togglePassword()"
+    ></ion-icon>
+  </div>
+  <span class="error-message" *ngIf="showError">{{ errorMessage }}</span>
+</div>

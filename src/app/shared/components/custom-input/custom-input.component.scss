@@ -1,0 +1,75 @@
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.label-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 4px;
+
+  ion-icon {
+    font-size: 18px;
+    color: var(--color-primary);
+  }
+
+  span {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    letter-spacing: -0.01em;
+  }
+}
+
+.input-wrapper {
+  position: relative;
+  border-radius: 18px; // Highly rounded as requested
+  background: #F1F5F9; // Soft background for depth
+  border: 1.5px solid transparent; 
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+
+  &.focused {
+    border-color: var(--color-primary);
+    background: #FFFFFF;
+    box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.08);
+  }
+
+  &.has-error {
+    border-color: var(--color-error);
+    background: #FFF5F5;
+  }
+
+  ion-input {
+    --padding-start: 22px;
+    --padding-end: 22px;
+    --padding-top: 16px;
+    --padding-bottom: 16px;
+    --color: var(--color-text-primary); // Clear Dark Slate text
+    --placeholder-color: #64748B;
+    --placeholder-opacity: 0.6;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+}
+
+.error-container {
+  padding-left: 4px;
+  min-height: 22px;
+  
+  span {
+    color: var(--color-error);
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: block;
+    animation: slideUp 0.3s ease-out;
+  }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(5px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

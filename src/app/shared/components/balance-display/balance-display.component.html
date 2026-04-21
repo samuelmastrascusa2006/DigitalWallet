@@ -1,0 +1,27 @@
+<div class="balance-container card-glass nova-glow">
+  <div class="balance-header">
+    <span class="label">VAULT LIQUIDITY</span>
+    <div class="status-indicator" (click)="toggleVisibility()">
+      <ion-icon [name]="hidden ? 'eye-off-outline' : 'eye-outline'" class="toggle-icon"></ion-icon>
+      <span class="pulse"></span>
+      {{ hidden ? 'ENCRYPTED' : 'LIVE' }}
+    </div>
+  </div>
+  
+  <div class="main-balance">
+    <span class="currency">$</span>
+    <h1 class="amount nova-gradient-text">
+      {{ hidden ? '••••••••' : (balance | number:'1.0-0') }}
+    </h1>
+  </div>
+  
+  <div class="balance-footer">
+    <div class="footer-item">
+      <span class="footer-label">ASSET STATUS</span>
+      <span class="footer-value">OPTIMIZED</span>
+    </div>
+    <div class="footer-item">
+      <ion-icon name="shield-checkmark-outline" class="security-icon"></ion-icon>
+    </div>
+  </div>
+</div>

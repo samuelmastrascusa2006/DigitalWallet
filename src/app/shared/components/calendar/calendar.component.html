@@ -1,0 +1,12 @@
+<div class="calendar-wrapper card-glass nova-glow">
+  <div class="calendar-header">
+    <ion-icon name="calendar-outline" class="header-icon"></ion-icon>
+    <span class="header-text">CHRONOS FILTER</span>
+  </div>
+  <ion-datetime
+    presentation="date"
+    [max]="maxDate"
+    (ionChange)="onDateSelected($event)"
+    class="custom-datetime">
+  </ion-datetime>
+</div>

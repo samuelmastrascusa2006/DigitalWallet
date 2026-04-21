@@ -1,0 +1,33 @@
+<div class="wallet-card nova-glass card-glow" [style.background]="getCardGradient()">
+  <div class="holographic-glare" [style.background]="getHolographicGlare()"></div>
+  
+  <div class="card-top">
+    <div class="card-chip nova-glow">
+      <div class="chip-pattern"></div>
+    </div>
+    <div class="card-franchise">
+      <ion-icon *ngIf="card.franchise === 'visa'" name="logo-foursquare" class="franchise-neon"></ion-icon>
+      <ion-icon *ngIf="card.franchise === 'mastercard'" name="logo-octocat" class="franchise-neon"></ion-icon>
+      <ion-icon *ngIf="card.franchise === 'unknown'" name="cube-outline" class="franchise-neon"></ion-icon>
+    </div>
+  </div>
+
+  <div class="card-number-container">
+    <div class="card-number">
+      <span class="masked">•••• •••• ••••</span>
+      <span class="last-four">{{ card.cardNumber }}</span>
+    </div>
+    <div class="card-status-dot" [class.active]="true"></div>
+  </div>
+
+  <div class="card-bottom">
+    <div class="card-holder">
+      <span class="card-label">VAULT HOLDER</span>
+      <span class="card-value">{{ card.cardHolder | uppercase }}</span>
+    </div>
+    <div class="card-expiry">
+      <span class="card-label">EXPIRES</span>
+      <span class="card-value">{{ card.expiryDate }}</span>
+    </div>
+  </div>
+</div>

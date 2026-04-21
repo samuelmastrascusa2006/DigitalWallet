@@ -1,0 +1,110 @@
+.payment-confirmation {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+
+  .loading-state,
+  .success-state,
+  .error-state,
+  .confirmation-state {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 16px;
+  }
+
+  .loading-state {
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    gap: 16px;
+    ion-spinner { width: 48px; height: 48px; }
+    p { font-size: 16px; }
+  }
+
+  .success-state {
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    text-align: center;
+    
+    .success-animation { animation: scaleIn 0.6s ease-out; }
+    h2 { margin: 0; font-size: 24px; font-weight: 600; }
+    .transaction-id, .timestamp { font-size: 12px; margin: 4px 0 0; }
+  }
+
+  .error-state {
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    text-align: center;
+    
+    .error-animation { animation: shake 0.5s ease-out; }
+    h2 { margin: 0; font-size: 24px; font-weight: 600; }
+    .error-message { font-size: 14px; margin: 12px 0 0; padding: 0 16px; }
+  }
+
+  .payment-summary {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    padding: 16px;
+    
+    h2 { margin: 0 0 12px 0; font-size: 16px; font-weight: 600; }
+    
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      &:last-child { border-bottom: none; }
+      
+      .label { font-size: 12px; font-weight: 500; }
+      .value { font-size: 12px; font-weight: 600; }
+      .amount { font-size: 16px; font-weight: 700; }
+    }
+  }
+
+  .biometric-section {
+    background: linear-gradient(135deg, var(--ion-color-primary) 0%, var(--ion-color-primary-tint) 100%);
+    border-radius: 12px;
+    padding: 16px;
+    color: white;
+
+    .biometric-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .biometric-info { font-size: 13px; margin: 0 0 12px 0; }
+    .biometric-button { margin-bottom: 8px; }
+    .alt-button { --border-color: rgba(255,255,255,0.3); --color: white; }
+  }
+
+  .no-biometric-section {
+    ion-note {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: rgba(245,158,11,0.1);
+      border-left: 4px solid var(--ion-color-warning);
+    }
+  }
+
+  @keyframes scaleIn {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+  }
+}

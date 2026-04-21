@@ -1,0 +1,140 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Confirmar Pago</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelPayment()" [disabled]="isProcessing">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="payment-confirmation">
+  <!-- Estado de Carga Inicial -->
+  <div *ngIf="isLoading" class="loading-state">
+    <ion-spinner></ion-spinner>
+    <p>Verificando biometría...</p>
+  </div>
+
+  <!-- Estado de Éxito -->
+  <div *ngIf="paymentResult?.success" class="success-state">
+    <div class="success-animation">
+      <ion-icon name="checkmark-circle" color="success"></ion-icon>
+    </div>
+    <h2>¡Pago Exitoso!</h2>
+    <p class="transaction-id" *ngIf="paymentResult?.transactionId">Transacción: {{ paymentResult?.transactionId }}</p>
+    <p class="timestamp">{{ paymentResult?.timestamp | date:'short' }}</p>
+  </div>
+
+  <!-- Estado de Error -->
+  <div *ngIf="errorMessage && !paymentResult" class="error-state">
+    <div class="error-animation">
+      <ion-icon name="close-circle" color="danger"></ion-icon>
+    </div>
+    <h2>Error en Pago</h2>
+    <p class="error-message">{{ errorMessage }}</p>
+    
+    <ion-button 
+      expand="block" 
+      color="primary"
+      (click)="retryPayment()"
+      [disabled]="isProcessing"
+      class="retry-button">
+      <ion-icon name="reload"></ion-icon>
+      Reintentar
+    </ion-button>
+  </div>
+
+  <!-- Confirmación de Pago (Estado Normal) -->
+  <div *ngIf="!isLoading && !paymentResult && !errorMessage" class="confirmation-state">
+    
+    <!-- Resumen del Pago -->
+    <div class="payment-summary">
+      <h2>Resumen del Pago</h2>
+      
+      <div class="summary-item">
+        <span class="label">Comercio:</span>
+        <span class="value">{{ paymentRequest.merchant }}</span>
+      </div>
+
+      <div class="summary-item">
+        <span class="label">Monto:</span>
+        <span class="value amount">{{ formatAmount(paymentRequest.amount) }}</span>
+      </div>
+
+      <div class="summary-item" *ngIf="paymentRequest.description">
+        <span class="label">Descripción:</span>
+        <span class="value">{{ paymentRequest.description }}</span>
+      </div>
+
+      <div class="summary-item" *ngIf="paymentRequest.category">
+        <span class="label">Categoría:</span>
+        <span class="value">{{ paymentRequest.category }}</span>
+      </div>
+    </div>
+
+    <!-- Seguridad Biométrica -->
+    <div class="biometric-section" *ngIf="biometricAvailable?.isAvailable">
+      <div class="biometric-header">
+        <ion-icon name="shield-checkmark" color="primary"></ion-icon>
+        <span>Seguridad de Pago</span>
+      </div>
+
+      <p class="biometric-info">
+        Este pago será protegido con {{ biometryTypeLabel }}
+      </p>
+
+      <ion-button
+        expand="block"
+        color="success"
+        size="large"
+        (click)="confirmPaymentWithBiometric()"
+        [disabled]="isProcessing"
+        class="biometric-button">
+        <ion-icon name="finger-print"></ion-icon>
+        <span *ngIf="!isProcessing">Autorizar con {{ biometryTypeLabel }}</span>
+        <ion-spinner *ngIf="isProcessing" name="crescent"></ion-spinner>
+      </ion-button>
+
+      <ion-button
+        fill="outline"
+        expand="block"
+        color="medium"
+        (click)="confirmPaymentWithoutBiometric()"
+        [disabled]="isProcessing"
+        class="alt-button">
+        Confirmar sin Biometría
+      </ion-button>
+    </div>
+
+    <!-- Sin Biometría Disponible -->
+    <div class="no-biometric-section" *ngIf="!biometricAvailable?.isAvailable">
+      <ion-note color="warning">
+        <ion-icon name="alert-circle"></ion-icon>
+        <span>Biometría no disponible en este dispositivo</span>
+      </ion-note>
+
+      <ion-button
+        expand="block"
+        color="primary"
+        size="large"
+        (click)="confirmPaymentWithoutBiometric()"
+        [disabled]="isProcessing">
+        <ion-icon name="checkmark"></ion-icon>
+        Confirmar Pago
+      </ion-button>
+    </div>
+
+    <!-- Cancelar -->
+    <ion-button
+      fill="clear"
+      expand="block"
+      color="danger"
+      (click)="cancelPayment()"
+      [disabled]="isProcessing"
+      class="cancel-button">
+      Cancelar
+    </ion-button>
+  </div>
+
+</ion-content>

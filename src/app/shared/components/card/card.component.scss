@@ -1,0 +1,115 @@
+.wallet-card {
+  width: min(320px, calc(100vw - 72px));
+  max-width: 320px;
+  height: 195px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 245, 255, 0.3) !important;
+  transition: all 0.3s ease;
+}
+
+.card-glow {
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.1);
+}
+
+.holographic-glare {
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  opacity: 0.15;
+  pointer-events: none;
+  transition: all 0.5s ease;
+  z-index: 1;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 2;
+}
+
+.card-chip {
+  width: 48px;
+  height: 34px;
+  background: linear-gradient(135deg, #00F5FF, #7000FF);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+}
+
+.chip-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 10px 10px, rgba(255,255,255,0.2) 1px, transparent 0);
+  background-size: 8px 8px;
+}
+
+.franchise-neon {
+  font-size: 32px;
+  color: var(--color-primary);
+  filter: drop-shadow(0 0 8px var(--color-primary));
+}
+
+.card-number-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+}
+
+.card-number {
+  font-size: 19px;
+  letter-spacing: 3px;
+  color: #ffffff;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+}
+
+.card-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #333;
+  
+  &.active {
+    background: var(--color-success);
+    box-shadow: 0 0 10px var(--color-success);
+  }
+}
+
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  z-index: 2;
+}
+
+.card-label {
+  display: block;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-primary);
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+.card-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}

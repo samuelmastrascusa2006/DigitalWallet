@@ -1,0 +1,55 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="transparent" class="nova-glass">
+    <ion-title class="nova-gradient-text">PAYMENT AUTHORIZATION</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <ion-icon name="close-outline" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="simulator-container">
+    <div class="merchant-icon-wrapper nova-glow">
+      <ion-icon name="storefront-outline" class="merchant-icon"></ion-icon>
+    </div>
+    
+    <h2 class="merchant-name">{{ merchantName | uppercase }}</h2>
+    <p class="merchant-category">{{ merchantCategory | uppercase }}</p>
+
+    <div class="amount-display">
+      <span class="currency">$</span>
+      <span class="amount nova-gradient-text">{{ amount | number:'1.0-0' }}</span>
+    </div>
+
+    <div class="payment-details card-glass">
+      <div class="detail-row">
+        <span class="label">VAULT ASSET</span>
+        <span class="detail-value">•••• •••• •••• {{ cardLastFour }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">VENDOR</span>
+        <span class="detail-value">{{ merchantName | uppercase }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">TIMESTAMP</span>
+        <span class="detail-value">{{ getCurrentDate() | uppercase }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">STATUS</span>
+        <span class="detail-value status-pending">PENDING BIOMETRIC</span>
+      </div>
+    </div>
+
+    <button class="confirm-btn nova-glow" (click)="confirm()">
+      <ion-icon name="finger-print-outline"></ion-icon>
+      AUTHORIZE TRANSACTION
+    </button>
+    
+    <button class="generate-btn" (click)="generateNewRandomData()">
+      <ion-icon name="refresh-outline"></ion-icon>
+      REGENERATE DATA
+    </button>
+  </div>
+</ion-content>

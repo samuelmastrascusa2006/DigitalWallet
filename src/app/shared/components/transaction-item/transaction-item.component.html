@@ -1,0 +1,28 @@
+<div class="transaction-container card-glass nova-glow" 
+     [class.negative]="transaction.amount < 0"
+     (mousedown)="onPressStart()" 
+     (mouseup)="onPressEnd()" 
+     (touchstart)="onPressStart()" 
+     (touchend)="onPressEnd()">
+     
+  <div class="emoji-wrapper">
+    <span class="emoji">{{ transaction.emoji || '💾' }}</span>
+    <div class="glow-ring"></div>
+  </div>
+  
+  <div class="tx-info">
+    <div class="tx-main">
+      <span class="merchant-name">{{ transaction.merchant | uppercase }}</span>
+      <span class="amount-value" [class.negative]="transaction.amount < 0">
+        {{ transaction.amount | number:'1.0-0' }} 
+        <span class="currency">V-CRED</span>
+      </span>
+    </div>
+    <div class="tx-meta">
+      <span class="date">{{ formatDate(transaction.date) }} • {{ transactionDate | date:'shortTime' }}</span>
+      <span class="status-chip">SECURED</span>
+    </div>
+  </div>
+  
+  <div class="indicator"></div>
+</div>
