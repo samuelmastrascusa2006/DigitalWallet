@@ -9,8 +9,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore, initializeFirestore, persistentLocalCache } from '@angular/fire/firestore';
-import { getApp } from '@angular/fire/app';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
@@ -33,10 +32,7 @@ registerLocaleData(localeEsCo);
     provideHttpClient(),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => initializeFirestore(getApp(), {
-      experimentalForceLongPolling: true,
-      localCache: persistentLocalCache()
-    }))
+    provideFirestore(() => getFirestore())
   ],
   bootstrap: [AppComponent],
 })
