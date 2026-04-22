@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "725794322884-09bmt7s906q9t42qjv87grnnge8npnmd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.novavault.app",
+            "certificate_hash": "2a36fe8f09345ea5fb183290ff6147fbdfbe9ef2"
+          }
+        },
+        {
+          "client_id": "725794322884-vl88flqm3hie6iu5ido5armlqberpjom.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.novavault.app",
+            "certificate_hash": "8ccfa7b32afed437d5e86260fef3264061c6efd9"
+          }
+        },
+        {
           "client_id": "725794322884-5k49648303s2uqiqtam396p2sjfpojom.apps.googleusercontent.com",
           "client_type": 3
         }
